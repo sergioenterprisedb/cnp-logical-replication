@@ -12,7 +12,7 @@ metadata:
   name: pg1
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:13
-  enableSuperuserAccess: false
+  enableSuperuserAccess: true
   instances: 1
 
   storage:
