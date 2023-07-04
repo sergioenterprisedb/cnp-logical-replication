@@ -1,0 +1,48 @@
+#apiVersion: v1
+#data:
+#  password: QW5ndXNZb3VuZzE5NTU=
+#  username: bG9naWNhbF9yZXB1c2Vy
+#kind: Secret
+#metadata:
+#  name: logical_repuser
+#---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg1
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:13
+  enableSuperuserAccess: false
+  instances: 1
+
+  storage:
+    size: 1Gi
+
+  bootstrap:
+    initdb:
+      dataChecksums: true
+      walSegmentSize: 32
+      postInitApplicationSQL:
+        - CREATE TABLE test1(id SERIAL PRIMARY KEY, description TEXT)
+        - CREATE TABLE test2(id SERIAL PRIMARY KEY, description TEXT)
+        - ALTER TABLE test1 OWNER TO app
+        - ALTER TABLE test2 OWNER TO app
+        - INSERT INTO test1 (description) VALUES('Test1')
+        - INSERT INTO test2 (description) VALUES('Test1')
+        - CREATE PUBLICATION migrate FOR ALL TABLES
+
+  managed:
+    roles:
+    - name: logical_repuser
+      ensure: present
+      comment: User for logical replication connections
+      login: true
+      replication: true
+      inRoles:
+        - app
+      passwordSecret:
+        name: logicalrepuser
+
+  postgresql:
+    pg_hba:
+      - hostssl replication logical_repuser 10.0.0.0/8 md5

@@ -1,0 +1,37 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg2
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:16
+  enableSuperuserAccess: false
+  instances: 1
+
+  storage:
+    size: 1Gi
+
+  bootstrap:
+    initdb:
+      dataChecksums: true
+      walSegmentSize: 32
+      import:
+        schemaOnly: true
+        type: microservice
+        databases:
+          - app
+        source:
+          externalCluster: pg1
+        postImportApplicationSQL:
+          - CREATE SUBSCRIPTION migrate CONNECTION 'host=pg1-rw user=logical_repuser dbname=app sslmode=require password=AngusYoung1955' PUBLICATION migrate
+
+  externalClusters:
+    - name: pg1
+      connectionParameters:
+        # Use the correct IP or host name for the source database
+        host: pg1-rw
+        user: logical_repuser
+        dbname: postgres
+      password:
+        name: logicalrepuser
+        key: password
+
