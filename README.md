@@ -1,5 +1,5 @@
 # Description
-In this demo I'll show you how to replicate from cluster 1 to cluster 2 all the tables created in the cluster 1.
+In this demo I'll show you how to replicate from 2 CloudNativePG clusters, from cluster 1 (pg1) to cluster 2 (pg2) all the tables created in the cluster 1.
 
 # Prerequisites
 - K8s environment (K8s, k3d, kind, ...)
