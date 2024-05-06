@@ -5,5 +5,5 @@
 kubectl create secret \
   -o yaml generic logicalrepuser \
   --from-literal=username=logical_repuser \
-  --from-literal=password=AngusYoung1955
+  --from-literal=password=Thisisatest01#
 

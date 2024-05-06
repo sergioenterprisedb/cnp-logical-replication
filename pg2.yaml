@@ -22,7 +22,7 @@ spec:
         source:
           externalCluster: pg1
         postImportApplicationSQL:
-          - CREATE SUBSCRIPTION migrate CONNECTION 'host=pg1-rw user=logical_repuser dbname=app sslmode=require password=AngusYoung1955' PUBLICATION migrate
+          - CREATE SUBSCRIPTION migrate CONNECTION 'host=pg1-rw user=logical_repuser dbname=app sslmode=require password=Thisisatest01#' PUBLICATION migrate
 
   externalClusters:
     - name: pg1
@@ -34,4 +34,7 @@ spec:
       password:
         name: logicalrepuser
         key: password
+
+  monitoring:
+    enablePodMonitor: true
 
