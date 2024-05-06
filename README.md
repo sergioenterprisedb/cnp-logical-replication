@@ -1,7 +1,15 @@
 # Description
 In this demo I'll show you how to replicate [dvdrental](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/)  database in a [CloudNativePG](https://cloudnative-pg.io) clusters with logical replication (publication and subscription), from cluster 1 (pg1) to cluster 2 (pg2) all the tables created in the cluster 1.
+
 This demo include the sequence synchronisation between the pg1 cluster and pg2 cluster.
 This method can be used to do major upgrades with PostgreSQL. As logical replication is used, there are some [restrictions](https://www.postgresql.org/docs/current/logical-replication-restrictions.html). 
+
+Cluster 1 include:
+- PostgreSQL 13
+
+Cluster 2 include:
+- PostgreSQL 16
+
 # Prerequisites
 - K8s environment (K8s, k3d, kind, ...)
 
